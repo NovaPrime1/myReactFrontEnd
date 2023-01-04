@@ -13,7 +13,7 @@ import DispatchContext from "./DispatchContext"
 //import CreatePost from "./components/CreatePost"
 //import ViewSinglePost from "./components/ViewSinglePost"
 // import ExampleContext from "./Example"
-// import Search from "./components/Search"
+// const Search = React.lazy(() => import("./components/Search"))
 // import Chat from "./components/Chat"
 import Header from "./components/Header"
 import HomeGuest from "./components/HomeGuest"
@@ -27,9 +27,9 @@ import FlashMessages from "./components/FlashMessages"
 import Profile from "./components/Profile"
 import EditPost from "./components/EditPost"
 import NotFound from "./components/NotFound"
-const Search = React.lazy(() => import("./components/Search"))
+import Search from "./components/Search"
 const Chat = React.lazy(() => import("./components/Chat"))
-import LoadingDotsIcon from "./components/LoadingDotIcon"
+import LoadingDotIcon from "./components/LoadingDotIcon"
 
 function Main() {
   const initialState = {
@@ -104,6 +104,40 @@ function Main() {
     }
   }, [state.loggedIn])
 
+  // useEffect(() => {
+  //   if (state.loggedIn) {
+  //     const username = state.user.username
+  //     switch (username) {
+  //       case "corey":
+  //         username = "corey"
+  //         avatarJpgLoc = "../components/avatar1.jpg"
+  //         return
+  //       case "coco":
+  //         username = "coco"
+  //         avatarJpgLoc = "../components/avatar2.jpg"
+  //         return
+  //       case "jessica":
+  //         props.username = "jessica"
+  //         avatarJpgLoc = "../components/avatar3.jpg"
+  //         return
+  //       case "clark":
+  //         props.username = "clark"
+  //         avatarJpgLoc = "../components/avatar4.jpg"
+  //         return
+  //       case "bryce":
+  //         props.username = "bryce"
+  //         avatarJpgLoc = "../components/avatar5.jpg"
+  //         return
+  //       case "tya":
+  //         props.username = "tya"
+  //         avatarJpgLoc = "../components/avatar6.jpg"
+  //         return
+  //     }
+  //   } else {
+  //     console.log("Username not found")
+  //   }
+  // }, [state.loggedIn])
+
   //Recreated function using useReducer
   //const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("complexappToken")))
   //const [flashMessages, setFlashMessages] = useState([])
@@ -153,11 +187,7 @@ function Main() {
             </Routes>
           </Suspense>
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
-            <div className="search-overlay">
-              <Suspense fallback="">
-                <Search />
-              </Suspense>
-            </div>
+            <Search />
           </CSSTransition>
           <Suspense fallback="">{state.loggedIn && <Chat />}</Suspense>
           <Footer />

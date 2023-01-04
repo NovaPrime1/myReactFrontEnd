@@ -5,7 +5,7 @@ import StateContext from "../StateContext"
 import ReactTooltip from "react-tooltip"
 
 function HeaderLoggedIn(props) {
-  //const { setLoggedIn } = useContext(ExampleContext)
+  //const { setLoggedIn } = useContext(ExampleContext) -- old
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
   console.log("HeaderLoggedIn: Function HeaderLoggedIn - Takes props and return JSX with features ")
@@ -22,6 +22,7 @@ function HeaderLoggedIn(props) {
   }
 
   // Fix the code so the correct Avatar show.
+  // src="../components/avatar1.jpg" -- old value
 
   return (
     <div className="flex-row my-3 my-md-0">

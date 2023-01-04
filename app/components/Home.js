@@ -5,7 +5,7 @@ import { useImmer } from "use-immer"
 import Axios from "axios"
 import Post from "./Post"
 import { Link } from "react-router-dom"
-import LoadingDotsIcon from "./LoadingDotIcon"
+import LoadingDotIcon from "./LoadingDotIcon"
 
 function Home() {
   const appState = useContext(StateContext)
@@ -27,11 +27,6 @@ function Home() {
           draft.feed = response.data
         })
       } catch (e) {
-        // tried it here but did not work.
-        // setState({ type: "logout" })
-        // setState({ type: "flashMessage", value: "You session has expired. Please log in again" })
-        // console.log("HomeJS: useEffect if statement to logout and send flashmessage")
-
         console.log("There was a problem")
       }
     }
@@ -42,7 +37,7 @@ function Home() {
   }, [])
 
   if (state.isLoading) {
-    return <LoadingDotsIcon />
+    return <LoadingDotIcon />
   }
 
   return (

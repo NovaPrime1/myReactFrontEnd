@@ -3,7 +3,7 @@ import { useImmerReducer } from "use-immer"
 import Page from "./Page"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
-import LoadingDotsIcon from "./LoadingDotIcon"
+import LoadingDotIcon from "./LoadingDotIcon"
 import StateContext from "../StateContext"
 // Importing App wide dispatch thanks to context.
 import DispatchContext from "../DispatchContext"

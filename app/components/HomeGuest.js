@@ -77,7 +77,6 @@ function HomeGuest() {
       case "emailAfterDelay":
         // if the test does not make the basic pattern for email.
         if (!/^\S+@\S+$/.test(draft.email.value)) {
-          // The below transition start reading after space for email but message does not go away. Need to findout what make it go away
           draft.email.hasErrors = true
           draft.email.message = "You must provide a valid email address."
         }
@@ -205,7 +204,7 @@ function HomeGuest() {
     // async -- removed before function
     // try {
     //   await Axios.post("/register", { username, email, password })
-    //   // await Axios.post("/register", { username: "Corey", email: "corey.powe@test.com", password: "qwerty123456" })
+    //   // await Axios.post("/register", { username: "Corey", email: "****@test.com", password: "*******" }) - Hard code first user
     //   console.log("User was successfully created")
     // } catch (e) {
     //   console.log(e)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios"
 import { useParams, Link } from "react-router-dom"
-import LoadingDotsIcon from "./LoadingDotIcon"
+import LoadingDotIcon from "./LoadingDotIcon"
 
 function ProfileFollowing(props) {
   const { username } = useParams()
@@ -27,7 +27,7 @@ function ProfileFollowing(props) {
     }
   }, [username])
 
-  if (isLoading) return <LoadingDotsIcon />
+  if (isLoading) return <LoadingDotIcon />
 
   return (
     <div className="list-group">

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import Page from "./Page"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
-import LoadingDotsIcon from "./LoadingDotIcon"
+import LoadingDotIcon from "./LoadingDotIcon"
 import ReactMarkdown from "react-markdown"
 import ReactTooltip from "react-tooltip"
 import NotFound from "./NotFound"
@@ -46,7 +46,7 @@ function ViewSinglePost(props) {
   if (isLoading)
     return (
       <Page title="...">
-        <LoadingDotsIcon />
+        <LoadingDotIcon />
       </Page>
     )
 

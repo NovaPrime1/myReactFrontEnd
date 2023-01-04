@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 
-function LoadingDotsIcon() {
+function LoadingDotIcon() {
   return (
     <div className="dots-loading">
       <div></div>
@@ -8,4 +8,4 @@ function LoadingDotsIcon() {
   )
 }
 
-export default LoadingDotsIcon
+export default LoadingDotIcon
