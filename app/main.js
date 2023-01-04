@@ -154,7 +154,7 @@ function Main() {
         try {
           console.log("Inside the try block for useEffect on loggedIn and here is the value :" + state.loggedIn)
           const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token })
-          console.log(response.data)
+          // console.log(response.data)
           if (!response.data) {
             dispatch({ type: "logout" })
             dispatch({ type: "flashMessage", value: "You session has expired. Please log in again" })
