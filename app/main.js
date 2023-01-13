@@ -46,17 +46,56 @@ function Main() {
     unreadChatCount: 0
   }
 
-  console.log("MainJS: Main() Function, before reducer")
+  // console.log("Debug: Components:MainjS | Method: Main() | Note: User Object created and initialized")
+  // console.log(initialState)
 
   function ourReducer(draft, action) {
-    console.log("MainJS: 1st Function ourReducer- Case switch")
+    // console.log("MainJS: 1st Function ourReducer- Case switch")
     switch (action.type) {
       case "login":
         // Immer replace useReducers calls to the entire object. Immer give a draft we can modify
         // return { loggedIn: true, flashMessages: state.flashMessages }
         draft.loggedIn = true
+
         // pull 3 valuse from state instead of local storage
-        draft.user = action.data
+        // draft.user = action.data - This is the original statement. But did username, tokent but directly set the avatar based on username
+
+        // Below is the code to set the avatar in state for each of the users
+
+        // First set username and the token first
+        draft.user.username = action.data.username
+        draft.user.token = action.data.token
+
+        // If statements for each user will pulls their avatar file and set it in state.
+        if (draft.user.username == "corey") {
+          draft.user.avatar = "../components/avatar1.jpg"
+          // console.log(" We are in the corey if statement")
+        }
+
+        if (draft.user.username == "coco") {
+          draft.user.avatar = "../components/avatar2.jpg"
+          // console.log(" We are in the coco if statement")
+        }
+
+        if (draft.user.username == "jessica") {
+          draft.user.avatar = "../components/avatar3.jpg"
+          // console.log(" We are in the jessica if statement")
+        }
+
+        if (draft.user.username == "clark") {
+          draft.user.avatar = "../components/avatar4.jpg"
+          // console.log(" We are in the clark if statement")
+        }
+        if (draft.user.username == "bryce") {
+          draft.user.avatar = "../components/avatar5.jpg"
+          // console.log(" We are in the bryce if statement")
+        }
+
+        if (draft.user.username == "tya") {
+          draft.user.avatar = "../components/avatar6.jpg"
+          // console.log(" We are in the tya if statement")
+        }
+        // console.log("Debug: Components:MainjS | Function: ourReducer(): case login | Note: After setting the draft user object 3 parts and check avatar")
         return
       case "logout":
         // return { loggedIn: false, flashMessages: state.flashMessages }
@@ -86,6 +125,7 @@ function Main() {
         return
     }
   }
+  // console.log("Debug: Components:MainjS | Method: Main() | Function: OurReducer ")
 
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
@@ -103,47 +143,6 @@ function Main() {
       localStorage.removeItem("complexappAvatar")
     }
   }, [state.loggedIn])
-
-  // useEffect(() => {
-  //   if (state.loggedIn) {
-  //     const username = state.user.username
-  //     switch (username) {
-  //       case "corey":
-  //         username = "corey"
-  //         avatarJpgLoc = "../components/avatar1.jpg"
-  //         return
-  //       case "coco":
-  //         username = "coco"
-  //         avatarJpgLoc = "../components/avatar2.jpg"
-  //         return
-  //       case "jessica":
-  //         props.username = "jessica"
-  //         avatarJpgLoc = "../components/avatar3.jpg"
-  //         return
-  //       case "clark":
-  //         props.username = "clark"
-  //         avatarJpgLoc = "../components/avatar4.jpg"
-  //         return
-  //       case "bryce":
-  //         props.username = "bryce"
-  //         avatarJpgLoc = "../components/avatar5.jpg"
-  //         return
-  //       case "tya":
-  //         props.username = "tya"
-  //         avatarJpgLoc = "../components/avatar6.jpg"
-  //         return
-  //     }
-  //   } else {
-  //     console.log("Username not found")
-  //   }
-  // }, [state.loggedIn])
-
-  //Recreated function using useReducer
-  //const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("complexappToken")))
-  //const [flashMessages, setFlashMessages] = useState([])
-  // function addFlashMessage(msg) {
-  //   setFlashMessages(prev => prev.concat(msg))
-  // }
 
   // Check if token has expired or not on first render
   useEffect(() => {
@@ -168,13 +167,15 @@ function Main() {
     }
   }, [])
 
+  // console.log("Debug: Components:MainjS | Method: Main() | Return with JSX with routes and inside StateContext")
+
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
           <FlashMessages messages={state.flashMessages} />
           <Header />
-          <Suspense>
+          <Suspense fallback={<LoadingDotIcon />}>
             <Routes>
               <Route path="/profile/:username/*" element={<Profile />} />
               <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />

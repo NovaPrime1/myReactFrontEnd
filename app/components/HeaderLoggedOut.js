@@ -8,11 +8,14 @@ function HeaderLoggedOut(props) {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
+  //console.log("Debug: Components:HeaderLoggedOut | Function: HeaderLoggedOut(props) | Note: Before the handleSubmit function")
+
   async function handleSubmit(e) {
     e.preventDefault()
     try {
       const response = await Axios.post("/login", { username, password })
       //console.log(response.data)
+      console.log("Debug: Components:HeaderLoggedOut | Function: handleSubmit(e) | Note: In try block after Axios call")
       if (response.data) {
         appDispatch({ type: "login", data: response.data })
         appDispatch({ type: "flashMessage", value: " Congratuations! You have successfully logged in " })
@@ -24,6 +27,8 @@ function HeaderLoggedOut(props) {
       console.log("There was a problem")
     }
   }
+
+  console.log("Debug: Components:HeaderLoggedOut | Function: HandleSubmit(e) | Note: Before the return statement")
 
   return (
     <form onSubmit={handleSubmit} className="mb-0 pt-2 pt-md-0">

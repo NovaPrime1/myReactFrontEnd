@@ -57,6 +57,10 @@ function ViewSinglePost(props) {
     if (appState.loggedIn) {
       // double equal sign comparision operator to check equality. look at both left and right and return true or false
       // console.log("This is the user name from ViewSinglePost : " + post.author.username)
+      console.log("Debug: Components:ViewSinglePostjs | Method: isOwner | Note: checking the author here")
+      post.author.avatar = appState.user.avatar
+      console.log(post.author.avatar)
+      console.log(appState.user.avatar)
       return appState.user.username == post.author.username
     }
     return false
@@ -102,7 +106,7 @@ function ViewSinglePost(props) {
 
       <p className="text-muted small mb-4">
         <Link to={`/profile/${post.author.username}`}>
-          <img className="avatar-tiny" src="../components/avatar1.jpg" />
+          <img className="avatar-tiny" src={post.author.avatar} />
         </Link>
         Posted by <Link to={`/profile/${post.author.username}`}>{post.author.username}</Link> on {dateFormatted}
       </p>

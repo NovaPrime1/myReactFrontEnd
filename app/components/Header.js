@@ -7,7 +7,7 @@ import StateContext from "../StateContext"
 function Header(props) {
   const appState = useContext(StateContext)
   const headerContent = appState.loggedIn ? <HeaderLoggedIn /> : <HeaderLoggedOut />
-  console.log("HeaderJS: Function Header - returns apps state ( loggedin/loggedout) and JSX. We are currently: " + appState.loggedIn)
+  // console.log("Debug: Components:Headerjs | Function: Header(props) | Note: returns apps state ( loggedin/loggedout) and JSX. We are currently: " + appState.loggedIn)
   return (
     <header className="header-bar bg-primary mb-3">
       <div className="container d-flex flex-column flex-md-row align-items-center p-3">

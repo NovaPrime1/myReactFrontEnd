@@ -63,7 +63,7 @@ function Chat() {
     })
   }
 
-  // Avatar not working properly and need to be fixed.
+  // Avatar not working properly and need to be fixed. May need to add switch or if statement for return value in the chat.- Will use debugger for that one.
   return (
     <div id="chat-wrapper" className={"chat-wrapper shadow border-top border-left border-right " + (appState.isChatOpen ? "chat-wrapper--is-visible" : "")}>
       <div className="chat-title-bar bg-primary">
@@ -80,14 +80,14 @@ function Chat() {
                 <div className="chat-message">
                   <div className="chat-message-inner">{message.message}</div>
                 </div>
-                <img className="chat-avatar avatar-tiny" src="../components/avatar1.jpg" />
+                <img className="chat-avatar avatar-tiny" src={message.avatar} />
               </div>
             )
           }
           return (
             <div key={index} className="chat-other">
               <Link to={`/profile/${message.username}`}>
-                <img className="avatar-tiny" src="../components/avatar2.jpg" />
+                <img className="avatar-tiny" src={message.avatar} />
               </Link>
               <div className="chat-message">
                 <div className="chat-message-inner">

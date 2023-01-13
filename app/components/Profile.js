@@ -17,8 +17,8 @@ function Profile() {
     stopFollowingRequestCount: 0,
     profileData: {
       profileUsername: "...",
-      // profileAvatar: "https://gravatar.com/avatar/placeholder?s=150", -- old entry.
-      profileAvatar: "http://1.gravatar.com/avatar/55cc61cb1efaebcb894b7e1d7b365870",
+      profileAvatar: "...",
+      // profileAvatar: "http://1.gravatar.com/avatar/55cc61cb1efaebcb894b7e1d7b365870",
       isFollowing: false,
       counts: { postCount: "", followerCount: "", followingCount: "" }
     }
@@ -33,8 +33,9 @@ function Profile() {
         const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: ourRequest.token })
         setState(draft => {
           draft.profileData = response.data
-          // console.log(response)
-          // console.log("Got successful response from DB")
+          // Below assignment is need for populating the profile data
+          draft.profileData.profileAvatar = appState.user.avatar
+          //console.log("Got successful response from DB")
         })
       } catch (e) {
         console.log("There was a problem")
@@ -116,10 +117,14 @@ function Profile() {
   }
 
   // src={state.profileData.profileAvatar} -- old entry
+
+  console.log("ProfileJs: This is the profileData object")
+  console.log(state.profileData)
+
   return (
     <Page title="Profile Screen">
       <h2>
-        <img className="avatar-small" src="../components/avatar1.jpg" /> {state.profileData.profileUsername}
+        <img className="avatar-small" src={"../components/avatar1.jpg"} /> {state.profileData.profileUsername}
         {appState.loggedIn && !state.profileData.isFollowing && appState.user.username != state.profileData.profileUsername && state.profileData.profileUsername != "..." && (
           <button onClick={startFollowing} disabled={state.followActionLoading} className="btn btn-primary btn-sm ml-2">
             Follow <i className="fas fa-user-plus"></i>
