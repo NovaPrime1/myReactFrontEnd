@@ -25,35 +25,35 @@ function Post(props) {
       case "corey":
         username = "corey"
         console.log(" Component: Postjs | Inside the avatarIcon function before return value -- corey")
-        avatar = "../components/avatar1.jpg"
+        avatar = "../img/avatar1.jpg"
         console.log("Value of the post.author.avatar")
         console.log(avatar)
         return
       case "coco":
         username = "coco"
         console.log(" Component: Postjs | Inside the avatarIcon function before return value -- coco")
-        avatar = "../components/avatar2.jpg"
+        avatar = "../img/avatar2.jpg"
         console.log(avatar)
         return
       case "jessica":
         username = "jessica"
-        avatar = "../components/avatar3.jpg"
+        avatar = "../img/avatar3.jpg"
         console.log(avatar)
         return
       case "clark":
         username = "clark"
         console.log(" Component: Postjs | Inside the avatarIcon function before return value -- clark")
-        avatar = "../components/avatar4.jpg"
+        avatar = "../img/avatar4.jpg"
         console.log(avatar)
         return
       case "bryce":
         username = "bryce"
-        avatar = "../components/avatar5.jpg"
+        avatar = "../img/avatar5.jpg"
         console.log(avatar)
         return
       case "tya":
         username = "tya"
-        avatar = "../components/avatar6.jpg"
+        avatar = "../img/avatar6.jpg"
         console.log(avatar)
         return
     }

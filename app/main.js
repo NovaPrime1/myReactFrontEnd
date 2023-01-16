@@ -68,31 +68,31 @@ function Main() {
 
         // If statements for each user will pulls their avatar file and set it in state.
         if (draft.user.username == "corey") {
-          draft.user.avatar = "../components/avatar1.jpg"
+          draft.user.avatar = "../img/avatar1.jpg"
           // console.log(" We are in the corey if statement")
         }
 
         if (draft.user.username == "coco") {
-          draft.user.avatar = "../components/avatar2.jpg"
+          draft.user.avatar = "../img/avatar2.jpg"
           // console.log(" We are in the coco if statement")
         }
 
         if (draft.user.username == "jessica") {
-          draft.user.avatar = "../components/avatar3.jpg"
+          draft.user.avatar = "../img/avatar3.jpg"
           // console.log(" We are in the jessica if statement")
         }
 
         if (draft.user.username == "clark") {
-          draft.user.avatar = "../components/avatar4.jpg"
+          draft.user.avatar = "../img/avatar4.jpg"
           // console.log(" We are in the clark if statement")
         }
         if (draft.user.username == "bryce") {
-          draft.user.avatar = "../components/avatar5.jpg"
+          draft.user.avatar = "../img/avatar5.jpg"
           // console.log(" We are in the bryce if statement")
         }
 
         if (draft.user.username == "tya") {
-          draft.user.avatar = "../components/avatar6.jpg"
+          draft.user.avatar = "../img/avatar6.jpg"
           // console.log(" We are in the tya if statement")
         }
         // console.log("Debug: Components:MainjS | Function: ourReducer(): case login | Note: After setting the draft user object 3 parts and check avatar")

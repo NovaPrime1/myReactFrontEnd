@@ -124,7 +124,7 @@ function Profile() {
   return (
     <Page title="Profile Screen">
       <h2>
-        <img className="avatar-small" src={"../components/avatar1.jpg"} /> {state.profileData.profileUsername}
+        <img className="avatar-small" src={state.profileData.profileAvatar} /> {state.profileData.profileUsername}
         {appState.loggedIn && !state.profileData.isFollowing && appState.user.username != state.profileData.profileUsername && state.profileData.profileUsername != "..." && (
           <button onClick={startFollowing} disabled={state.followActionLoading} className="btn btn-primary btn-sm ml-2">
             Follow <i className="fas fa-user-plus"></i>
