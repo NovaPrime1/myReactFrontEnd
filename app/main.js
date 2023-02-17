@@ -31,10 +31,16 @@ import Search from "./components/Search"
 const Chat = React.lazy(() => import("./components/Chat"))
 import LoadingDotIcon from "./components/LoadingDotIcon"
 
+// Main program notes:
+// pull 3 value from state instead of local storage
+// Immer replace useReducers calls to the entire object. Immer give a draft we can modify
+// NOTE: Not keep alive token set for a log expiry for working with the session need to lower that to 10 minutes.
+
 function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("complexappToken")),
     flashMessages: [],
+    alertType: "...",
     // User app availbile to global and application state.
     user: {
       token: localStorage.getItem("complexappToken"),
@@ -47,21 +53,14 @@ function Main() {
   }
 
   // console.log("Debug: Components:MainjS | Method: Main() | Note: User Object created and initialized")
-  // console.log(initialState)
 
   function ourReducer(draft, action) {
     // console.log("MainJS: 1st Function ourReducer- Case switch")
     switch (action.type) {
       case "login":
-        // Immer replace useReducers calls to the entire object. Immer give a draft we can modify
-        // return { loggedIn: true, flashMessages: state.flashMessages }
         draft.loggedIn = true
-
-        // pull 3 valuse from state instead of local storage
-        // draft.user = action.data - This is the original statement. But did username, tokent but directly set the avatar based on username
-
+        //  Please note : draft.user = action.data - This is the original statement. But did username, tokent but directly set the avatar based on username
         // Below is the code to set the avatar in state for each of the users
-
         // First set username and the token first
         draft.user.username = action.data.username
         draft.user.token = action.data.token
@@ -69,57 +68,57 @@ function Main() {
         // If statements for each user will pulls their avatar file and set it in state.
         if (draft.user.username == "corey") {
           draft.user.avatar = "../img/avatar1.jpg"
-          // console.log(" We are in the corey if statement")
         }
 
         if (draft.user.username == "coco") {
           draft.user.avatar = "../img/avatar2.jpg"
-          // console.log(" We are in the coco if statement")
         }
 
         if (draft.user.username == "jessica") {
           draft.user.avatar = "../img/avatar3.jpg"
-          // console.log(" We are in the jessica if statement")
         }
 
         if (draft.user.username == "clark") {
           draft.user.avatar = "../img/avatar4.jpg"
-          // console.log(" We are in the clark if statement")
         }
         if (draft.user.username == "bryce") {
           draft.user.avatar = "../img/avatar5.jpg"
-          // console.log(" We are in the bryce if statement")
         }
 
         if (draft.user.username == "tya") {
           draft.user.avatar = "../img/avatar6.jpg"
-          // console.log(" We are in the tya if statement")
         }
-        // console.log("Debug: Components:MainjS | Function: ourReducer(): case login | Note: After setting the draft user object 3 parts and check avatar")
         return
+
       case "logout":
-        // return { loggedIn: false, flashMessages: state.flashMessages }
         draft.loggedIn = false
         return
+
       case "flashMessage":
-        // return { loggedIn: state.loggedIn, flashMessages: state.flashMessages.concat(action.value) }
         draft.flashMessages.push(action.value)
+        draft.alertType = action.alertType
         return
+
       case "openSearch":
         draft.isSearchOpen = true
         return
+
       case "closeSearch":
         draft.isSearchOpen = false
         return
+
       case "toggleChat":
         draft.isChatOpen = !draft.isChatOpen
         return
+
       case "closeChat":
         draft.isChatOpen = false
         return
+
       case "incrementUnreadChatCount":
         draft.unreadChatCount++
         return
+
       case "clearUnreadChatCount":
         draft.unreadChatCount = 0
         return
@@ -131,7 +130,7 @@ function Main() {
 
   useEffect(() => {
     if (state.loggedIn) {
-      console.log("MainJS: 1st UseEffect: Watching state.loggedIn for user information : " + state.loggedIn)
+      // console.log("*******MainJS: 1st UseEffect: Watching state.loggedIn for user information :**** " + state.flashMessages)
       // save data to local storage but pulled from state instead of local storage
       localStorage.setItem("complexappToken", state.user.token)
       localStorage.setItem("complexappUsername", state.user.username)
@@ -147,11 +146,9 @@ function Main() {
   // Check if token has expired or not on first render
   useEffect(() => {
     if (state.loggedIn) {
-      console.log("MainJS: 2st UseEffect: Watching state.loggedIn for token expiry : " + state.loggedIn)
       const ourRequest = Axios.CancelToken.source()
       async function fetchResults() {
         try {
-          console.log("Inside the try block for useEffect on loggedIn and here is the value :" + state.loggedIn)
           const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token })
           // console.log(response.data)
           if (!response.data) {
@@ -173,7 +170,7 @@ function Main() {
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
-          <FlashMessages messages={state.flashMessages} />
+          <FlashMessages messages={state.flashMessages} alertType={state.alertType} />
           <Header />
           <Suspense fallback={<LoadingDotIcon />}>
             <Routes>

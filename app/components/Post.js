@@ -9,7 +9,7 @@ function Post(props) {
   var avatar = appState.user.avatar
   const dateFormatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 
-  console.log("Debug: Components:Postjs | Method: Post(props) | Note: Message before the avatarIcon function and the proops.posts")
+  console.log("Debug: Components:Postjs | Method: Post(props) | Note: Message before the avatarIcon function and the props.posts ")
   console.log(props.post)
 
   // old Link that works properly

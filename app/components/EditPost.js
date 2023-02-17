@@ -105,7 +105,7 @@ function EditPost(props) {
         if (response.data) {
           dispatch({ type: "fetchComplete", value: response.data })
           if (appState.user.username != response.data.author.username) {
-            appDispatch({ type: "FlashMessage", value: "You do not have permision to edit that post." })
+            appDispatch({ type: "FlashMessage", value: "You do not have permision to edit that post.", alertType: "warning" })
             // redirect to homepage
             navigate("/")
           }
@@ -133,7 +133,7 @@ function EditPost(props) {
         try {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token })
           dispatch({ type: "saveRequestFinished" })
-          appDispatch({ type: "flashMessage", value: "Post was updated." })
+          appDispatch({ type: "flashMessage", value: "Post was updated.", alertType: "success" })
         } catch (error) {
           console.log("ViewSinglePost: There was a problem or the request was cancelled")
         }

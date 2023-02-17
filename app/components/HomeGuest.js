@@ -182,7 +182,7 @@ function HomeGuest() {
         try {
           const response = await Axios.post("/register", { username: state.username.value, email: state.email.value, password: state.password.value }, { cancelToken: ourRequest.token })
           appDispatch({ type: "login", data: response.data })
-          appDispatch({ type: "flashMessage", value: "Congrats! Welcome to your new account" })
+          appDispatch({ type: "flashMessage", value: "Congrats! Welcome to your new account", alertType: "success" })
         } catch (e) {}
       }
       fetchResults()

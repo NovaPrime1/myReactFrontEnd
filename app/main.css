@@ -72,6 +72,12 @@ body {
   color: #ffffff;
 }
 
+.is-invalid {
+  background-color: #444;
+  border-color: red;
+  color: #ffffff;
+}
+
 .input-dark:focus {
   color: #ffffff;
   background-color: #555;

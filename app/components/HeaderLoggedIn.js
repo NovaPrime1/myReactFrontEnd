@@ -14,7 +14,7 @@ function HeaderLoggedIn(props) {
   function handleLogout() {
     //setLoggedIn(false)
     appDispatch({ type: "logout" })
-    appDispatch({ type: "flashMessage", value: " Have a nice day. You have successfully logged out!" })
+    appDispatch({ type: "flashMessage", value: " Have a nice day. You have successfully logged out!", alertType: "success" })
   }
 
   function handleSearchIcon(e) {

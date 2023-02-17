@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useState } from "react"
 import Page from "./Page"
 import { useParams, NavLink, Routes, Route } from "react-router-dom"
 import Axios from "axios"
@@ -7,11 +7,13 @@ import ProfilePost from "./ProfilePost"
 import ProfileFollowers from "./ProfileFollowers"
 import ProfileFollowing from "./ProfileFollowing"
 import { useImmer } from "use-immer"
+import NotFound from "./NotFound"
 
 function Profile() {
   const { username } = useParams()
   const appState = useContext(StateContext)
   const [state, setState] = useImmer({
+    isUserNotFound: "...",
     followActionLoading: false,
     startFollowingRequestCount: 0,
     stopFollowingRequestCount: 0,
@@ -23,22 +25,37 @@ function Profile() {
       counts: { postCount: "", followerCount: "", followingCount: "" }
     }
   })
+  // Set up use state for loading and give it a default value of true
+  // Added userState above in react and after if condiction I setPost and setUserFound
+  // const [isUserFound, setIsUserFound] = useState(true)
+  // const isNotFound = false
 
   useEffect(() => {
-    console.log("ProfileJS: 1st UseEffect: Watching username : " + username)
+    console.log("ProfileJS: UseEffect : Watching username : " + username)
+
+    // Added this to reset each time we call the useEffect
+    if (username) {
+      setState(draft => {
+        draft.isUserNotFound = true
+      })
+    }
     const ourRequest = Axios.CancelToken.source()
 
     async function fetchData() {
       try {
         const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: ourRequest.token })
-        setState(draft => {
-          draft.profileData = response.data
-          // Below assignment is need for populating the profile data
-          draft.profileData.profileAvatar = appState.user.avatar
-          //console.log("Got successful response from DB")
-        })
+        if (!response.data) {
+          setIsUserFound()
+          console.log(" The user was not found in DB")
+        } else {
+          setState(draft => {
+            draft.isUserNotFound = false
+            draft.profileData = response.data
+            draft.profileData.profileAvatar = appState.user.avatar
+          })
+        }
       } catch (e) {
-        console.log("There was a problem")
+        console.log("There was a problem.")
       }
     }
     fetchData()
@@ -99,10 +116,16 @@ function Profile() {
     }
   }, [state.stopFollowingRequestCount])
 
-  {
-    /* <img className="avatar-small" src={state.profileData.profileAvatar} /> {state.profileData.profileUsername} 
-    <img className="avatar-small" src="../components/avatar1.jpg" /> {state.profileData.profileUsername}*/
-    // {appState.loggedIn && !state.profileData.isFollowing && appState.user.username == state.profileData.profileUsername && state.profileData.profileUsername == "..." && (
+  // {
+  //   /* <img className="avatar-small" src={state.profileData.profileAvatar} /> {state.profileData.profileUsername}
+  //   <img className="avatar-small" src="../components/avatar1.jpg" /> {state.profileData.profileUsername}*/
+  //   // {appState.loggedIn && !state.profileData.isFollowing && appState.user.username == state.profileData.profileUsername && state.profileData.profileUsername == "..." && (
+  // }
+
+  function setIsUserFound() {
+    setState(draft => {
+      draft.isUserNotFound = true
+    })
   }
   function startFollowing() {
     setState(draft => {
@@ -116,10 +139,17 @@ function Profile() {
     })
   }
 
-  // src={state.profileData.profileAvatar} -- old entry
+  function pSlowDown() {
+    console.log("Trying to delay the NotFound page")
+  }
 
-  console.log("ProfileJs: This is the profileData object")
-  console.log(state.profileData)
+  // src={state.profileData.profileAvatar} -- old entry
+  // console.log("ProfileJs: This is the profileData object")
+  // console.log(state.profileData)
+
+  if (state.isUserNotFound) {
+    return <NotFound />
+  }
 
   return (
     <Page title="Profile Screen">

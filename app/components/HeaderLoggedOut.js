@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useContext } from "react"
 import Axios from "axios"
 import DispatchContext from "../DispatchContext"
+
 import FlashMessages from "./FlashMessages"
+import NotFound from "./NotFound"
+import LoadingDotIcon from "./LoadingDotIcon"
 
 function HeaderLoggedOut(props) {
   const appDispatch = useContext(DispatchContext)
@@ -12,23 +15,36 @@ function HeaderLoggedOut(props) {
 
   async function handleSubmit(e) {
     e.preventDefault()
+
+    if (username === "undefined" || username == null) {
+      let uNameElement = document.getElementsByClassName("form-control form-control-sm input-dark")[0]
+      uNameElement.classList.add("is-invalid")
+      appDispatch({ type: "flashMessage", value: "The username is blank", alertType: "warning" })
+      return
+    }
+    if (password === "undefined" || password == null) {
+      let pWordElement = document.getElementsByClassName("form-control form-control-sm input-dark")[1]
+      pWordElement.classList.add("is-invalid")
+      appDispatch({ type: "flashMessage", value: "The password is blank", alertType: "warning" })
+      return
+    }
+
     try {
       const response = await Axios.post("/login", { username, password })
-      //console.log(response.data)
-      console.log("Debug: Components:HeaderLoggedOut | Function: handleSubmit(e) | Note: In try block after Axios call")
+      // console.log("Debug: Components:HeaderLoggedOut | Function: handleSubmit(e) | Note: In try block after Axios call")
       if (response.data) {
         appDispatch({ type: "login", data: response.data })
-        appDispatch({ type: "flashMessage", value: " Congratuations! You have successfully logged in " })
+        appDispatch({ type: "flashMessage", value: " Congratuations! You have successfully logged in ", alertType: "success" })
       } else {
-        console.log("Incorrect Username / password.")
-        appDispatch({ type: "flashMessage", value: "Invalid username and password combination !!" })
+        // console.log("Incorrect Username / password.")
+        appDispatch({ type: "flashMessage", value: "Invalid username and password combination !!", alertType: "warning" })
       }
     } catch (e) {
       console.log("There was a problem")
     }
   }
 
-  console.log("Debug: Components:HeaderLoggedOut | Function: HandleSubmit(e) | Note: Before the return statement")
+  //console.log("Debug: Components:HeaderLoggedOut | Function: HandleSubmit(e) | Note: Before the return statement")
 
   return (
     <form onSubmit={handleSubmit} className="mb-0 pt-2 pt-md-0">

@@ -17,7 +17,7 @@ function Header(props) {
             ComplexApp for React development{" "}
           </Link>
         </h4>
-        {!props.statcEmpty ? headerContent : ""}
+        {!props.staticEmpty ? headerContent : ""}
       </div>
     </header>
   )
