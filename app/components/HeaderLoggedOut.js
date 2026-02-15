@@ -11,6 +11,10 @@ function HeaderLoggedOut(props) {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
+  // const api = axios.create({
+  //   baseURL: process.env.BACKENDURL || 'http://localhost:8080'
+  // })
+
   //console.log("Debug: Components:HeaderLoggedOut | Function: HeaderLoggedOut(props) | Note: Before the handleSubmit function")
 
   async function handleSubmit(e) {
@@ -31,6 +35,7 @@ function HeaderLoggedOut(props) {
 
     try {
       const response = await Axios.post("/login", { username, password })
+      // const response = await api.post('/login', { username, password })
       // console.log("Debug: Components:HeaderLoggedOut | Function: handleSubmit(e) | Note: In try block after Axios call")
       if (response.data) {
         appDispatch({ type: "login", data: response.data })

@@ -15,11 +15,15 @@ function CreatePost(props) {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      const response = await Axios.post("/create-post", { title, body, token: appState.user.token })
+      console.log("Inside the try catch for the handleSummit")
+      const response = await Axios.post("/create-post", { title, body, token: appState.user.token }) // Check this in Postman need good token
+      console.log("Response data:", response.data) // Check what's returned
+      console.log("Response data type:", typeof response.data)
       // Redirect to new post URL
       appDispatch({ type: "flashMessage", value: "Congrats you have created a new post", alertType: "success" })
-      navigate(`/post/${response.data}`)
-      // console.log("New post was created")
+      console.log("Complete the appDispatch call to flashMessage and alert")
+      navigate(`/post/${response.data.id}`)
+      console.log("New post was created")
     } catch (e) {
       console.log("There was a problem")
     }
