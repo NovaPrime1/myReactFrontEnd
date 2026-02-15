@@ -4,6 +4,8 @@ import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
 import ReactTooltip from "react-tooltip"
 
+//For new and latest commit on 1/24/2026
+
 function HeaderLoggedIn(props) {
   //const { setLoggedIn } = useContext(ExampleContext) -- old
   const appDispatch = useContext(DispatchContext)
