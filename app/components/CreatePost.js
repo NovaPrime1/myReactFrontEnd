@@ -12,10 +12,47 @@ function CreatePost(props) {
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
 
+  function getCreatedPostId(data) {
+    if (typeof data === "string" && data.length > 0) {
+      return data
+    }
+
+    if (data && typeof data === "object") {
+      const raw = data._id || data.id || data.post?._id || data.post?.id
+      return raw && typeof raw === "object" ? raw.toString() : raw
+    }
+
+    return ""
+  }
+
+  function getCreatePostErrorMessage(error) {
+    const responseData = error?.response?.data
+
+    if (Array.isArray(responseData) && responseData.length > 0) {
+      return responseData.join(" ")
+    }
+
+    if (typeof responseData === "string" && responseData.trim().length > 0) {
+      return responseData
+    }
+
+    if (responseData && typeof responseData === "object") {
+      if (typeof responseData.message === "string" && responseData.message.trim().length > 0) {
+        return responseData.message
+      }
+
+      if (Array.isArray(responseData.errors) && responseData.errors.length > 0) {
+        return responseData.errors.join(" ")
+      }
+    }
+
+    return "There was a problem creating the post. Please try again."
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      console.log("Inside the try catch for the handleSummit")
+            console.log("Inside the try catch for the handleSummit")
       const response = await Axios.post("/create-post", { title, body, token: appState.user.token }) // Check this in Postman need good token
       console.log("Response data:", response.data) // Check what's returned
       console.log("Response data type:", typeof response.data)
@@ -25,7 +62,12 @@ function CreatePost(props) {
       navigate(`/post/${response.data.id}`)
       console.log("New post was created")
     } catch (e) {
-      console.log("There was a problem")
+      console.error("Create post failed", {
+        status: e?.response?.status,
+        data: e?.response?.data,
+        message: e?.message
+      })
+      appDispatch({ type: "flashMessage", value: getCreatePostErrorMessage(e), alertType: "danger" })
     }
   }
   return (
