@@ -52,43 +52,15 @@ function CreatePost(props) {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      const createPostPayload = { title, body, token: appState.user.token }
-      console.log("Create-post request payload", {
-        title,
-        body,
-        bodyLength: typeof body === "string" ? body.length : 0,
-        hasToken: Boolean(appState.user?.token)
-      })
-
-      const response = await Axios.post("/create-post", createPostPayload)
-      console.log("Create-post response", {
-        status: response?.status,
-        data: response?.data,
-        dataType: typeof response?.data
-      })
-
-      let createdPostId = getCreatedPostId(response.data)
-
-      if (!createdPostId) {
-        const postsResponse = await Axios.get(`/profile/${appState.user.username}/posts`)
-        const matchingPosts = Array.isArray(postsResponse.data)
-          ? postsResponse.data.filter(post => post.title === title && post.body === body)
-          : []
-
-        if (matchingPosts.length > 0) {
-          matchingPosts.sort((firstPost, secondPost) => new Date(secondPost.createdDate) - new Date(firstPost.createdDate))
-          createdPostId = matchingPosts[0]._id
-        }
-      }
-
-      if (!createdPostId) {
-        console.error("Unexpected create-post response shape:", response.data)
-        throw new Error("Create post response did not include a post id")
-      }
-
+            console.log("Inside the try catch for the handleSummit")
+      const response = await Axios.post("/create-post", { title, body, token: appState.user.token }) // Check this in Postman need good token
+      console.log("Response data:", response.data) // Check what's returned
+      console.log("Response data type:", typeof response.data)
       // Redirect to new post URL
       appDispatch({ type: "flashMessage", value: "Congrats you have created a new post", alertType: "success" })
-      navigate(`/post/${createdPostId}`)
+      console.log("Complete the appDispatch call to flashMessage and alert")
+      navigate(`/post/${response.data.id}`)
+      console.log("New post was created")
     } catch (e) {
       console.error("Create post failed", {
         status: e?.response?.status,

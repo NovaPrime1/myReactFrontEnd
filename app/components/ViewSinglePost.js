@@ -23,8 +23,10 @@ function ViewSinglePost(props) {
 
     async function fetchPost() {
       try {
-        const response = await Axios.get(`/post/${id}`, { cancelToken: ourRequest.token })
-        console.log("This is the response : " + response)
+        // const response = await Axios.get(`/post/${id}`, { cancelToken: ourRequest.token })
+        const response = await Axios.get(`${process.env.BACKENDURL}/post/${id}`, { cancelToken: ourRequest.token })
+        console.log("This is the response:" + response)
+        console.log ("This is the id: " + id)
         setPost(response.data)
         setIsLoading(false)
       } catch (error) {
