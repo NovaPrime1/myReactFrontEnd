@@ -4,7 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
 import LoadingDotIcon from "./LoadingDotIcon"
 import ReactMarkdown from "react-markdown"
-import ReactTooltip from "react-tooltip"
+import { Tooltip } from "react-tooltip"
 import NotFound from "./NotFound"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
@@ -90,14 +90,14 @@ function ViewSinglePost(props) {
         <h2>{post.title}</h2>
         {isOwner() && (
           <span className="pt-2">
-            <Link to={`/post/${post._id}/edit`} data-tip="Edit" data-for="edit" className="text-primary mr-2">
+            <Link to={`/post/${post._id}/edit`} data-tooltip-id="edit" data-tooltip-content="Edit" className="text-primary mr-2">
               <i className="fas fa-edit"></i>
             </Link>
-            <ReactTooltip id="edit" className="custom-tooltip" />{" "}
-            <a onClick={deleteHandler} data-tip="Delete" data-for="delete" className="delete-post-button text-danger">
+            <Tooltip id="edit" className="custom-tooltip" />{" "}
+            <a onClick={deleteHandler} data-tooltip-id="delete" data-tooltip-content="Delete" className="delete-post-button text-danger">
               <i className="fas fa-trash"></i>
             </a>
-            <ReactTooltip id="delete" className="custom-tooltip" />
+            <Tooltip id="delete" className="custom-tooltip" />
           </span>
         )}
       </div>

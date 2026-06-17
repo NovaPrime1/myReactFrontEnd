@@ -69,7 +69,14 @@ if (currentTask == "webpackDev" || currentTask == "dev") {
     },
     hot: true,
     liveReload: false,
-    historyApiFallback: { index: "index.html" }
+    historyApiFallback: { index: "index.html" },
+    proxy: [
+      {
+        context: ["/api", "/create-post", "/login", "/register", "/post", "/profile", "/doesUsernameExist", "/doesEmailExist", "/getHomeFeed", "/getFollowers", "/getFollowing"],
+        target: "http://localhost:8080",
+        changeOrigin: true
+      }
+    ]
   }
 }
 

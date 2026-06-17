@@ -4,7 +4,7 @@ import { useImmerReducer } from "use-immer"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { CSSTransition } from "react-transition-group"
 import Axios from "axios"
-Axios.defaults.baseURL = process.env.BACKENDURL || "https://myreactbackendtest-novaprime.onrender.com"
+Axios.defaults.baseURL = process.env.BACKENDURL || (process.env.NODE_ENV === "production" ? "https://myreactbackendtest-novaprime.onrender.com" : "http://localhost:8080")
 import { createRoot } from "react-dom/client"
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
